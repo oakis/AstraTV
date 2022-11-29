@@ -10,15 +10,7 @@ const headerOptions = {
   headerStyle: {
     backgroundColor: colors.purple,
   },
-  headerTintColor: colors.black,
-  headerTitleStyle: {
-    width: '100%',
-    marginHorizontal: 'auto',
-    alignSelf: 'center',
-    textAlign: 'center',
-    fontSize: 16,
-    fontFamily: 'sans-serif',
-  },
+  headerTintColor: colors.white,
 };
 
 export type RootStackParamList = {
