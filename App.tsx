@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import colors from 'utils/colors';
 import Home from 'views/Home';
 import Details from 'views/Details';
+import { SearchProvider } from 'contexts/SearchContext';
 
 const headerOptions = {
   headerStyle: {
@@ -24,16 +25,22 @@ const App = () => {
   return (
     <>
       <StatusBar backgroundColor={colors.purple} barStyle="light-content" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} options={headerOptions} />
-          <Stack.Screen
-            name="Details"
-            component={Details}
-            options={headerOptions}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SearchProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={headerOptions}
+            />
+            <Stack.Screen
+              name="Details"
+              component={Details}
+              options={headerOptions}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SearchProvider>
     </>
   );
 };
