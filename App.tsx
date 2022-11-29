@@ -16,7 +16,7 @@ const headerOptions = {
 
 export type RootStackParamList = {
   Home: undefined;
-  Details: undefined;
+  Details: { id: number };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

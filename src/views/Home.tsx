@@ -1,22 +1,26 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
-// import { NativeStackScreenProps } from '@react-navigation/native-stack';
-// import { RootStackParamList } from 'App';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'App';
 import colors from 'utils/colors';
 import metrics from 'utils/metrics';
 import { SearchContext } from 'contexts/SearchContext';
 import { Button } from 'components/Button';
+import { SearchResult } from 'components/SearchResult';
 
-// type IHome = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type IHome = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const Home = () => {
+const Home = (props: IHome) => {
   const [search, setSearch] = useState('');
 
   const { results, searchTvShows } = useContext(SearchContext);
 
   const onSearch = () => {
-    console.log('onSearch');
     searchTvShows(search);
+  };
+
+  const navigateToDetails = (id: number) => {
+    props.navigation.navigate('Details', { id });
   };
 
   return (
@@ -33,10 +37,10 @@ const Home = () => {
         <Button onPress={onSearch} title="Sök" />
       </View>
       <View style={style.spacer} />
-      {/* <FlatList /> */}
       {results.map(result => (
-        <Text>{result.show.name}</Text>
+        <SearchResult {...result} onPress={navigateToDetails} />
       ))}
+      <View style={style.spacer} />
     </ScrollView>
   );
 };
@@ -54,7 +58,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
   },
   spacer: {
-    marginTop: metrics.padding.md,
+    marginTop: metrics.padding.lg,
   },
   horizontalSpacer: {
     marginRight: metrics.padding.md,
@@ -72,7 +76,7 @@ const style = StyleSheet.create({
   row: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexWrap: 'nowrap',
   },
 });
