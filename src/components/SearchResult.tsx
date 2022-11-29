@@ -1,10 +1,11 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import colors from 'utils/colors';
 import metrics from 'utils/metrics';
 
 interface ISearchResult extends ISearch {
-  onPress: (id: number) => void;
+  onPress: (id: number, title: string) => void;
 }
 
 export const SearchResult = (props: ISearchResult) => {
@@ -12,12 +13,16 @@ export const SearchResult = (props: ISearchResult) => {
   const rating = props.show.rating.average;
 
   const onPress = () => {
-    props.onPress(props.show.id);
+    props.onPress(props.show.id, props.show.name);
   };
 
   return (
     <TouchableOpacity style={style.container} onPress={onPress}>
-      <Image source={{ uri: props.show.image.medium }} style={style.image} />
+      {props.show.image ? (
+        <Image source={{ uri: props.show.image.medium }} style={style.image} />
+      ) : (
+        <View style={[style.image, style.noimage]} />
+      )}
       <View style={style.column}>
         <Text style={style.title}>{props.show.name}</Text>
         <Text style={style.year}>{year}</Text>
@@ -50,5 +55,8 @@ const style = StyleSheet.create({
   image: {
     width: 74.7457627118644,
     height: 105,
+  },
+  noimage: {
+    backgroundColor: colors.gray,
   },
 });

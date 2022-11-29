@@ -8,9 +8,9 @@ import { SearchContext } from 'contexts/SearchContext';
 import { Button } from 'components/Button';
 import { SearchResult } from 'components/SearchResult';
 
-type IHome = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type IHomeView = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const Home = (props: IHome) => {
+const Home = (props: IHomeView) => {
   const [search, setSearch] = useState('');
 
   const { results, searchTvShows } = useContext(SearchContext);
@@ -19,8 +19,8 @@ const Home = (props: IHome) => {
     searchTvShows(search);
   };
 
-  const navigateToDetails = (id: number) => {
-    props.navigation.navigate('Details', { id });
+  const navigateToDetails = (id: number, title: string) => {
+    props.navigation.navigate('Details', { id, title });
   };
 
   return (
@@ -38,7 +38,11 @@ const Home = (props: IHome) => {
       </View>
       <View style={style.spacer} />
       {results.map(result => (
-        <SearchResult {...result} onPress={navigateToDetails} />
+        <SearchResult
+          {...result}
+          onPress={navigateToDetails}
+          key={result.show.id}
+        />
       ))}
       <View style={style.spacer} />
     </ScrollView>
@@ -56,6 +60,7 @@ const style = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: colors.black,
   },
   spacer: {
     marginTop: metrics.padding.lg,

@@ -6,6 +6,7 @@ import colors from 'utils/colors';
 import Home from 'views/Home';
 import Details from 'views/Details';
 import { SearchProvider } from 'contexts/SearchContext';
+import { DetailsProvider } from 'contexts/DetailsContext';
 
 const headerOptions = {
   headerStyle: {
@@ -16,7 +17,7 @@ const headerOptions = {
 
 export type RootStackParamList = {
   Home: undefined;
-  Details: { id: number };
+  Details: { id: number; title: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,20 +27,22 @@ const App = () => {
     <>
       <StatusBar backgroundColor={colors.purple} barStyle="light-content" />
       <SearchProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={headerOptions}
-            />
-            <Stack.Screen
-              name="Details"
-              component={Details}
-              options={headerOptions}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <DetailsProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={headerOptions}
+              />
+              <Stack.Screen
+                name="Details"
+                component={Details}
+                options={headerOptions}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </DetailsProvider>
       </SearchProvider>
     </>
   );
