@@ -34,16 +34,20 @@ const Home = (props: IHomeView) => {
           value={search}
         />
         <View style={style.horizontalSpacer} />
-        <Button onPress={onSearch} title="Sök" />
+        <Button onPress={onSearch} title="Search" />
       </View>
       <View style={style.spacer} />
-      {results.map(result => (
-        <SearchResult
-          {...result}
-          onPress={navigateToDetails}
-          key={result.show.id}
-        />
-      ))}
+      {results.length !== 0 ? (
+        results.map(result => (
+          <SearchResult
+            {...result}
+            onPress={navigateToDetails}
+            key={result.show.id}
+          />
+        ))
+      ) : (
+        <Text>No results..</Text>
+      )}
       <View style={style.spacer} />
     </ScrollView>
   );

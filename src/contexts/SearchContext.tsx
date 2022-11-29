@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import { Alert } from 'react-native';
 
 const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [results, setResults] = useState<ISearch[]>([]);
@@ -14,10 +15,20 @@ const SearchProvider = ({ children }: { children: React.ReactNode }) => {
 
     fetch(url, config)
       .then(async res => {
-        const json = await res.json();
-        setResults(json);
+        try {
+          const json = await res.json();
+          if (json === null || json.length === 0) {
+            setResults([]);
+          } else {
+            setResults(json);
+          }
+        } catch (error) {
+          Alert.alert('Error', 'Something went wrong.');
+        }
       })
-      .catch(err => console.warn(err));
+      .catch(() => {
+        Alert.alert('Error', 'Something went wrong.');
+      });
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useCallback } from 'react';
+import { Alert } from 'react-native';
 
 const DetailsProvider = ({ children }: { children: React.ReactNode }) => {
   const [details, setDetails] = useState<IDetails | null>(null);
@@ -14,10 +15,16 @@ const DetailsProvider = ({ children }: { children: React.ReactNode }) => {
 
     fetch(url, config)
       .then(async res => {
-        const json = await res.json();
-        setDetails(json);
+        try {
+          const json = await res.json();
+          setDetails(json);
+        } catch (error) {
+          Alert.alert('Error', 'Something went wrong.');
+        }
       })
-      .catch(err => console.warn(err));
+      .catch(() => {
+        Alert.alert('Error', 'Something went wrong.');
+      });
   }, []);
 
   const clearDetails = useCallback(() => {
