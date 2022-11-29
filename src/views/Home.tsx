@@ -1,17 +1,11 @@
 import React, { useState, useContext } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 // import { NativeStackScreenProps } from '@react-navigation/native-stack';
 // import { RootStackParamList } from 'App';
 import colors from 'utils/colors';
 import metrics from 'utils/metrics';
 import { SearchContext } from 'contexts/SearchContext';
+import { Button } from 'components/Button';
 
 // type IHome = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -35,6 +29,7 @@ const Home = () => {
           onChangeText={setSearch}
           value={search}
         />
+        <View style={style.horizontalSpacer} />
         <Button onPress={onSearch} title="Sök" />
       </View>
       <View style={style.spacer} />
@@ -61,15 +56,24 @@ const style = StyleSheet.create({
   spacer: {
     marginTop: metrics.padding.md,
   },
+  horizontalSpacer: {
+    marginRight: metrics.padding.md,
+  },
   input: {
     borderWidth: 1,
     borderColor: colors.black,
     borderRadius: metrics.padding.md,
-    padding: metrics.padding.sm,
+    paddingLeft: metrics.padding.md,
+    paddingRight: metrics.padding.md,
+    paddingTop: metrics.padding.sm,
+    paddingBottom: metrics.padding.sm,
+    flex: 1,
   },
   row: {
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-around',
+    flexWrap: 'nowrap',
   },
 });
 

@@ -15,7 +15,6 @@ const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     fetch(url, config)
       .then(async res => {
         const json = await res.json();
-        console.log(json);
         setResults(json);
       })
       .catch(err => console.warn(err));
